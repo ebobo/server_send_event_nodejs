@@ -1,0 +1,22 @@
+[
+  {
+    "system": "AutroSafe",
+    "type": "Alarm",
+    "unitId": "U001"
+  },
+  {
+    "system": "AutroPrime",
+    "type": "Fault",
+    "unitId": "U002"
+  },
+  {
+    "system": "AutroSafe",
+    "type": "Alarm",
+    "unitId": "U003"
+  },
+  {
+    "system": "AutroSafe",
+    "type": "Fault",
+    "unitId": "U004"
+  }
+]
