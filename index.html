@@ -8,22 +8,28 @@
     <title>SSE server</title>
   </head>
   <body>
-    <h4>SSE server 5005</h4>
+    <h5>SSE server 5005</h5>
     <div class="container">
       <div id="aaa" class="channel">
         <div class="name">Alarm</div>
         <div class="subscribers">0</div>
-        <button onclick="subscribe('aaa')">Add</button>
+        <button class="alarm" onclick="subscribe('aaa')">+ 1</button>
+        <button class="alarm" onclick="subscribe('aaa')">+ 100</button>
+        <button class="alarm" onclick="subscribe('aaa')">+ 1000</button>
       </div>
       <div id="w3certified" class="channel">
         <div class="name">Fault</div>
         <div class="subscribers">0</div>
-        <button onclick="subscribe('w3certified')">Add</button>
+        <button class="fault" onclick="subscribe('aaa')">+ 1</button>
+        <button class="fault" onclick="subscribe('aaa')">+ 100</button>
+        <button class="fault" onclick="subscribe('aaa')">+ 1000</button>
       </div>
       <div id="bbb" class="channel">
         <div class="name">Unknow</div>
         <div class="subscribers">0</div>
-        <button onclick="subscribe('bbb')">Add</button>
+        <button class="unknow" onclick="subscribe('aaa')">+ 1</button>
+        <button class="unknow" onclick="subscribe('aaa')">+ 100</button>
+        <button class="unknow" onclick="subscribe('aaa')">+ 1000</button>
       </div>
     </div>
 

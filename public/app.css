@@ -21,7 +21,7 @@ div#container {
 }
 div.channel {
   display: grid;
-  grid-template-columns: 5fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr;
   grid-gap: 1rem;
   margin-bottom: 1rem;
@@ -29,5 +29,22 @@ div.channel {
 button {
   padding: 1rem;
   border-radius: 1rem;
-  background-color: aquamarine;
+}
+
+button.alarm {
+  color: white;
+  background-color: rgb(212, 48, 48);
+  border-width: 0px;
+  border-color: pink;
+}
+
+button.fault {
+  color: white;
+  background-color: rgb(255, 187, 0);
+  border-width: 0px;
+}
+
+button.unknow {
+  background-color: rgb(184, 184, 184);
+  border-width: 0px;
 }
