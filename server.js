@@ -17,6 +17,7 @@ const app = express();
 // for fixing"Access - Control- Allow - Origin" Cors issue
 app.use(cors());
 
+// ##############################
 app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.json());
