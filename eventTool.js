@@ -16,6 +16,20 @@ module.exports.generateEvents = (num) => {
   return events;
 };
 
+//The maximum is exclusive and the minimum is inclusive
+module.exports.generateEventsByType = (num, type) => {
+  let events = [];
+  const system = 'Autrosafe';
+  for (let i = 0; i < num; i++) {
+    events.push({
+      unitId: pad(Math.floor(Math.random() * 100000), 6),
+      type,
+      system,
+    });
+  }
+  return events;
+};
+
 function pad(num, size) {
   num = num.toString();
   while (num.length < size) num = '0' + num;

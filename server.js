@@ -53,8 +53,30 @@ app.get('/', (req, res) => {
   res.status(200).send(html);
 });
 
-// get eventspath
+// get events
 app.get('/events', (req, res) => res.send(events));
+
+// add events
+app.post('/events', (req, res) => {
+  const type = req.body.type;
+  const size = req.body.size;
+  console.log('post events', type, size);
+  if (!size || !type) {
+    return res.status(400).send(`Bad Request Body`);
+  }
+
+  generatedEvents = tool.generateEventsByType(size, type);
+  events = events.concat(generatedEvents);
+
+  clients.forEach((client) =>
+    client.response.write(`data: ${JSON.stringify(generatedEvents)}\n\n`)
+  );
+
+  res.send({
+    type: events.filter((e) => e.type === type).length.toString(),
+    total: events.length,
+  });
+});
 
 // home path
 app.post('/event', (req, res) => {

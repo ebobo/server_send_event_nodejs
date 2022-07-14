@@ -8,32 +8,62 @@
     <title>SSE server</title>
   </head>
   <body>
-    <h5>SSE server 5005</h5>
+    <h6 class="title">SSE server at port 5005</h6>
     <div class="container">
-      <div id="aaa" class="channel">
+      <div id="Total" class="channel">
+        <div class="name">Total</div>
+        <div class="events">0</div>
+        <button class="delete" onclick="clearAll()">Clear All</button>
+      </div>
+      <div id="Alarms" class="channel">
         <div class="name">Alarm</div>
-        <div class="subscribers">0</div>
-        <button class="alarm" onclick="subscribe('aaa')">+ 1</button>
-        <button class="alarm" onclick="subscribe('aaa')">+ 100</button>
-        <button class="alarm" onclick="subscribe('aaa')">+ 1000</button>
+        <div class="events">0</div>
+        <button class="alarm" onclick="addEvents(1, 'Alarm')">+ 1</button>
+        <button class="alarm" onclick="addEvents(100, 'Alarm')">+ 100</button>
+        <button class="alarm" onclick="addEvents(1000, 'Alarm')">+ 1000</button>
       </div>
-      <div id="w3certified" class="channel">
+      <div id="Faults" class="channel">
         <div class="name">Fault</div>
-        <div class="subscribers">0</div>
-        <button class="fault" onclick="subscribe('aaa')">+ 1</button>
-        <button class="fault" onclick="subscribe('aaa')">+ 100</button>
-        <button class="fault" onclick="subscribe('aaa')">+ 1000</button>
+        <div class="events">0</div>
+        <button class="fault" onclick="addEvents(1, 'Fault')">+ 1</button>
+        <button class="fault" onclick="addEvents(100, 'Fault')">+ 100</button>
+        <button class="fault" onclick="addEvents(1000, 'Fault')">+ 1000</button>
       </div>
-      <div id="bbb" class="channel">
+      <div id="Unknows" class="channel">
         <div class="name">Unknow</div>
-        <div class="subscribers">0</div>
-        <button class="unknow" onclick="subscribe('aaa')">+ 1</button>
-        <button class="unknow" onclick="subscribe('aaa')">+ 100</button>
-        <button class="unknow" onclick="subscribe('aaa')">+ 1000</button>
+        <div class="events">0</div>
+        <button class="unknow" onclick="addEvents(1, 'Unknow')">+ 1</button>
+        <button class="unknow" onclick="addEvents(100, 'Unknow')">+ 100</button>
+        <button class="unknow" onclick="addEvents(1000, 'Unknow')">
+          + 1000
+        </button>
       </div>
     </div>
 
     <script>
+      //add alarm
+      function addEvents(number, type) {
+        var data = JSON.stringify({
+          type: type,
+          size: number,
+        });
+
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener('readystatechange', function () {
+          if (this.readyState === 4) {
+            obj = JSON.parse(this.responseText);
+            document.querySelector(`#${type}s .events`).innerHTML = obj.type;
+            document.querySelector(`#Total .events`).innerHTML = obj.total;
+          }
+        });
+
+        xhr.open('POST', '/events');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(data);
+      }
+
       async function subscribe(companyId) {
         var connection = await fetch(`subscribe/${companyId}`);
         var response = await connection.json();

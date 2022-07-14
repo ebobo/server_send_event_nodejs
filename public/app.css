@@ -25,7 +25,16 @@ div.channel {
   grid-template-rows: 1fr;
   grid-gap: 1rem;
   margin-bottom: 1rem;
+  align-items: center;
 }
+
+div.name {
+  font-size: 0.9em;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: dimgray;
+}
+
 button {
   padding: 1rem;
   border-radius: 1rem;
@@ -47,4 +56,14 @@ button.fault {
 button.unknow {
   background-color: rgb(184, 184, 184);
   border-width: 0px;
+}
+
+button.delete {
+  background-color: rgb(52, 168, 235);
+  border-width: 0px;
+}
+
+h6.title {
+  margin-bottom: 2rem;
+  color: chocolate;
 }
