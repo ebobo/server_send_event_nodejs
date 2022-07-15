@@ -11,7 +11,13 @@ module.exports.generateEvents = (num) => {
     } else if (rem === 2) {
       type = 'Unknow';
     }
-    events.push({ unitId: pad(i + 1, digit), type, system });
+    const now = new Date();
+    events.push({
+      unitId: pad(i + 1, digit),
+      type,
+      system,
+      time: now.toLocaleString(),
+    });
   }
   return events;
 };
@@ -21,10 +27,12 @@ module.exports.generateEventsByType = (num, type) => {
   let events = [];
   const system = 'Autrosafe';
   for (let i = 0; i < num; i++) {
+    const now = new Date();
     events.push({
       unitId: pad(Math.floor(Math.random() * 100000), 6),
       type,
       system,
+      time: now.toLocaleString(),
     });
   }
   return events;

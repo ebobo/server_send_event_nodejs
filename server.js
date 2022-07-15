@@ -69,6 +69,11 @@ app.get('/events/length', (req, res) => {
 app.delete('/events', (req, res) => {
   const length = events.length;
   events = [];
+
+  clients.forEach((client) => {
+    client.response.write('event: clear\n');
+    client.response.write(`data: all\n\n`);
+  });
   res.send(`all ${length} events deleted`);
 });
 
@@ -84,9 +89,9 @@ app.post('/events', (req, res) => {
   generatedEvents = tool.generateEventsByType(size, type);
   events = events.concat(generatedEvents);
 
-  clients.forEach((client) =>
-    client.response.write(`data: ${JSON.stringify(generatedEvents)}\n\n`)
-  );
+  clients.forEach((client) => {
+    client.response.write(`data: ${JSON.stringify(generatedEvents)}\n\n`);
+  });
 
   res.send({
     type: events.filter((e) => e.type === type).length.toString(),
@@ -113,9 +118,9 @@ app.post('/event', (req, res) => {
     res.send('added');
   }
 
-  clients.forEach((client) =>
-    client.response.write(`data: ${JSON.stringify(req.body)}\n\n`)
-  );
+  clients.forEach((client) => {
+    client.response.write(`data: ${JSON.stringify(req.body)}\n\n`);
+  });
 });
 
 // sse path
