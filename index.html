@@ -42,6 +42,8 @@
 
     <script>
       //add alarm
+      getEventsNumber();
+
       function addEvents(number, type) {
         var data = JSON.stringify({
           type: type,
@@ -69,27 +71,34 @@
           method: 'DELETE',
           redirect: 'follow',
         };
-
         try {
           const response = await fetch('/events', requestOptions);
           const result = await response.text();
-          document.querySelector(`#Total .events`).innerHTML = 0;
-          document.querySelector(`#Alarms .events`).innerHTML = 0;
-          document.querySelector(`#Faults .events`).innerHTML = 0;
-          document.querySelector(`#Unknows .events`).innerHTML = 0;
+          setEventsNumber(0, 0, 0, 0);
           console.log(result);
         } catch (err) {
           console.log(err);
         }
       }
 
-      async function subscribe() {
-        var connection = await fetch(`subscribe/${companyId}`);
-        var response = await connection.json();
-        console.log(response);
+      async function getEventsNumber() {
+        try {
+          const response = await fetch('events/length');
+          const { total, alarm, fault, unknow } = await response.json();
+          setEventsNumber(total, alarm, fault, unknow);
+        } catch (err) {
+          console.log(err);
+        }
       }
 
-      var eventSource = new EventSource('/sse');
+      function setEventsNumber(total, alarm, fault, unknow) {
+        document.querySelector(`#Total .events`).innerHTML = total;
+        document.querySelector(`#Alarms .events`).innerHTML = alarm;
+        document.querySelector(`#Faults .events`).innerHTML = fault;
+        document.querySelector(`#Unknows .events`).innerHTML = unknow;
+      }
+
+      /* var eventSource = new EventSource('/sse');
       eventSource.addEventListener('message', function (e) {
         try {
           console.log(e.data);
@@ -100,7 +109,7 @@
               companies[companyId].subscribers;
           }
         } catch {}
-      });
+      }); */
     </script>
   </body>
 </html>
