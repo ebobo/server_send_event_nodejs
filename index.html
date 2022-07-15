@@ -64,7 +64,26 @@
         xhr.send(data);
       }
 
-      async function subscribe(companyId) {
+      async function clearAll() {
+        const requestOptions = {
+          method: 'DELETE',
+          redirect: 'follow',
+        };
+
+        try {
+          const response = await fetch('/events', requestOptions);
+          const result = await response.text();
+          document.querySelector(`#Total .events`).innerHTML = 0;
+          document.querySelector(`#Alarms .events`).innerHTML = 0;
+          document.querySelector(`#Faults .events`).innerHTML = 0;
+          document.querySelector(`#Unknows .events`).innerHTML = 0;
+          console.log(result);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      async function subscribe() {
         var connection = await fetch(`subscribe/${companyId}`);
         var response = await connection.json();
         console.log(response);

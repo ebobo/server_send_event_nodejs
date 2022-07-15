@@ -53,8 +53,17 @@ app.get('/', (req, res) => {
   res.status(200).send(html);
 });
 
-// get events
+// get all events
 app.get('/events', (req, res) => res.send(events));
+
+// get number of events
+app.get('/events/length', (req, res) => res.send(events.length));
+
+app.delete('/events', (req, res) => {
+  const length = events.length;
+  events = [];
+  res.send(`all ${length} events deleted`);
+});
 
 // add events
 app.post('/events', (req, res) => {
