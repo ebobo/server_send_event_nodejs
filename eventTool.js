@@ -17,6 +17,7 @@ module.exports.generateEvents = (num) => {
       type,
       system,
       time: now.toLocaleString(),
+      acknowledge: false,
     });
   }
   return events;
@@ -32,6 +33,7 @@ module.exports.generateEventsByType = (num, type, system) => {
       type,
       system,
       time: now.toLocaleString(),
+      acknowledge: false,
     });
   }
   return events;

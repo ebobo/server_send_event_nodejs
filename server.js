@@ -124,6 +124,32 @@ app.post('/event', (req, res) => {
   });
 });
 
+//acknowledge event
+app.put('/event/:id/:ack', (req, res) => {
+  const uid = req.params.id;
+  const ack = req.params.ack;
+
+  if (!uid || !ack) {
+    return res.status(400).send(`Bad Request Body`);
+  }
+  const eve = events.find((e) => e.unitId === uid);
+  if (eve) {
+    eve.acknowledge = ack === 'true';
+    res.send(eve);
+  } else {
+    res.send(`can't find ${uid}`);
+  }
+});
+
+//acknowledge all events
+app.put('/events/ack/:ack', (req, res) => {
+  const ack = req.params.ack;
+  events.forEach((e) => (e.acknowledge = ack === 'true'));
+  res.send(
+    `all events been ${ack === 'true' ? 'acknowledge' : 'unacknowladged'}`
+  );
+});
+
 // sse path
 app.get('/stream', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
