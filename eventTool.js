@@ -2,7 +2,7 @@
 module.exports.generateEvents = (num) => {
   let events = [];
   const digit = 6;
-  const system = 'Autrosafe';
+  const system = 'AutroSafe';
   for (let i = 0; i < num; i++) {
     rem = i % 3;
     let type = 'Alarm';
@@ -23,13 +23,12 @@ module.exports.generateEvents = (num) => {
 };
 
 //The maximum is exclusive and the minimum is inclusive
-module.exports.generateEventsByType = (num, type) => {
+module.exports.generateEventsByType = (num, type, system) => {
   let events = [];
-  const system = 'Autrosafe';
   for (let i = 0; i < num; i++) {
     const now = new Date();
     events.push({
-      unitId: pad(Math.floor(Math.random() * 100000), 6),
+      unitId: pad(Math.floor(Math.random() * 100000), 5),
       type,
       system,
       time: now.toLocaleString(),
@@ -41,5 +40,5 @@ module.exports.generateEventsByType = (num, type) => {
 function pad(num, size) {
   num = num.toString();
   while (num.length < size) num = '0' + num;
-  return num;
+  return 'U' + num;
 }

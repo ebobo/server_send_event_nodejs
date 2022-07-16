@@ -15,6 +15,18 @@
         <div class="events">0</div>
         <button class="delete" onclick="clearAll()">Clear All</button>
       </div>
+      <div id="System" class="system">
+        <input
+          type="radio"
+          id="autrosafe"
+          name="system"
+          value="AutroSafe"
+          checked
+        />
+        <label for="autrosafe" class="radio">AutroSafe</label>
+        <input type="radio" id="autroprime" name="system" value="AutroPrime" />
+        <label for="autroprime" class="radio">AutroPrime</label>
+      </div>
       <div id="Alarms" class="channel">
         <div class="name">Alarm</div>
         <div class="events">0</div>
@@ -45,12 +57,16 @@
       getEventsNumber();
 
       function addEvents(number, type) {
-        var data = JSON.stringify({
+        const system = systemType();
+        if (!system) return;
+
+        const data = JSON.stringify({
           type: type,
           size: number,
+          system,
         });
 
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
 
         xhr.addEventListener('readystatechange', function () {
@@ -96,6 +112,15 @@
         document.querySelector(`#Alarms .events`).innerHTML = alarm;
         document.querySelector(`#Faults .events`).innerHTML = fault;
         document.querySelector(`#Unknows .events`).innerHTML = unknow;
+      }
+
+      function systemType() {
+        const radioButtons = document.querySelectorAll('input[name="system"]');
+        for (const radioButton of radioButtons) {
+          if (radioButton.checked) {
+            return radioButton.value;
+          }
+        }
       }
 
       /* var eventSource = new EventSource('/sse');

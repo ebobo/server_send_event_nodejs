@@ -80,13 +80,14 @@ app.delete('/events', (req, res) => {
 // add events
 app.post('/events', (req, res) => {
   const type = req.body.type;
+  const system = req.body.system;
   const size = req.body.size;
-  console.log('post events', type, size);
-  if (!size || !type) {
+
+  if (!size || !type || !system) {
     return res.status(400).send(`Bad Request Body`);
   }
 
-  generatedEvents = tool.generateEventsByType(size, type);
+  generatedEvents = tool.generateEventsByType(size, type, system);
   events = events.concat(generatedEvents);
 
   clients.forEach((client) => {
@@ -99,7 +100,7 @@ app.post('/events', (req, res) => {
   });
 });
 
-// home path
+// post event
 app.post('/event', (req, res) => {
   const uid = req.body.unitId;
   const system = req.body.system;

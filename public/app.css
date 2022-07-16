@@ -27,7 +27,14 @@ div.channel {
   margin-bottom: 1rem;
   align-items: center;
 }
-
+div.system {
+  display: grid;
+  grid-template-columns: 0.3fr 2fr 0.3fr 2fr 8fr;
+  grid-template-rows: 1fr;
+  margin-bottom: 1rem;
+  align-items: center;
+  justify-items: start;
+}
 div.name {
   font-size: 0.9em;
   font-family: sans-serif;
@@ -66,4 +73,11 @@ button.delete {
 h6.title {
   margin-bottom: 2rem;
   color: chocolate;
+}
+
+label.radio {
+  font-size: 0.6em;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: rgb(138, 43, 207);
 }
