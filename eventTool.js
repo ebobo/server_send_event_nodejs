@@ -17,7 +17,7 @@ module.exports.generateEvents = (num) => {
       Type,
       System,
       Timestamp: now.toLocaleString(),
-      acknowledge: false,
+      Acknowledged: false,
     });
   }
   return events;
