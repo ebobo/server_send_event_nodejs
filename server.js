@@ -150,6 +150,16 @@ app.put('/events/ack/:ack', (req, res) => {
   );
 });
 
+//get clients info
+app.get('/clients', (req, res) => {
+  if (clients.length > 0) {
+    list = clients.map((c) => ({ id: c.id, ip: c.ip.replace('http://', '') }));
+    res.send(list);
+  } else {
+    res.send('no clients connected');
+  }
+});
+
 // sse path
 app.get('/stream', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
@@ -159,8 +169,11 @@ app.get('/stream', (req, res) => {
   base_id++;
   const clientId = base_id;
 
+  // get clinet ip
+  // console.log(req.headers.origin);
   const newClient = {
     id: clientId,
+    ip: req.headers.origin,
     response: res,
   };
 

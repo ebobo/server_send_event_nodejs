@@ -27,6 +27,15 @@ div.channel {
   margin-bottom: 1rem;
   align-items: center;
 }
+div.info {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
 div.system {
   display: grid;
   grid-template-columns: 0.3fr 2fr 0.3fr 2fr 8fr;
@@ -36,38 +45,47 @@ div.system {
   justify-items: start;
 }
 div.name {
-  font-size: 0.9em;
+  font-size: 0.8em;
   font-family: sans-serif;
   font-weight: bold;
   color: dimgray;
 }
 
+div.t2 {
+  font-size: 0.7em;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: rgb(51, 65, 196);
+}
+
 button {
   padding: 1rem;
   border-radius: 1rem;
+  border-width: 0px;
 }
 
 button.alarm {
   color: white;
   background-color: rgb(212, 48, 48);
-  border-width: 0px;
   border-color: pink;
 }
 
 button.fault {
   color: white;
   background-color: rgb(255, 187, 0);
-  border-width: 0px;
 }
 
 button.unknow {
   background-color: rgb(184, 184, 184);
-  border-width: 0px;
 }
 
 button.delete {
   background-color: rgb(52, 168, 235);
-  border-width: 0px;
+}
+
+button.getinfo {
+  color: white;
+  background-color: rgb(3, 89, 139);
 }
 
 h6.title {
