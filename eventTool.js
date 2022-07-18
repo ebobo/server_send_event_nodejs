@@ -2,21 +2,21 @@
 module.exports.generateEvents = (num) => {
   let events = [];
   const digit = 6;
-  const system = 'AutroSafe';
+  const System = 'AutroSafe';
   for (let i = 0; i < num; i++) {
     rem = i % 3;
-    let type = 'Alarm';
+    let Type = 'Alarm';
     if (rem === 1) {
-      type = 'Fault';
+      Type = 'Fault';
     } else if (rem === 2) {
-      type = 'Unknow';
+      Type = 'Unknow';
     }
     const now = new Date();
     events.push({
-      unitId: pad(i + 1, digit),
-      type,
-      system,
-      time: now.toLocaleString(),
+      UnitId: pad(i + 1, digit),
+      Type,
+      System,
+      Timestamp: now.toLocaleString(),
       acknowledge: false,
     });
   }
@@ -29,11 +29,11 @@ module.exports.generateEventsByType = (num, type, system) => {
   for (let i = 0; i < num; i++) {
     const now = new Date();
     events.push({
-      unitId: pad(Math.floor(Math.random() * 100000), 5),
-      type,
-      system,
-      time: now.toLocaleString(),
-      acknowledge: false,
+      UnitId: pad(Math.floor(Math.random() * 100000), 5),
+      Type: type,
+      System: system,
+      Timestamp: now.toLocaleString(),
+      Acknowledged: false,
     });
   }
   return events;
