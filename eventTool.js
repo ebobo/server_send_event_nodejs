@@ -1,7 +1,7 @@
 //The maximum is exclusive and the minimum is inclusive
 module.exports.generateEvents = (num) => {
   let events = [];
-  const digit = 6;
+  const digit = 5;
   const System = 'AutroSafe';
   for (let i = 0; i < num; i++) {
     rem = i % 3;
@@ -16,7 +16,7 @@ module.exports.generateEvents = (num) => {
       UnitId: pad(i + 1, digit),
       Type,
       System,
-      Timestamp: now.toLocaleString(),
+      Timestamp: now.toLocaleString('no-NO', { hour12: false }),
       Acknowledged: false,
     });
   }
@@ -32,7 +32,7 @@ module.exports.generateEventsByType = (num, type, system) => {
       UnitId: pad(Math.floor(Math.random() * 100000), 5),
       Type: type,
       System: system,
-      Timestamp: now.toLocaleString(),
+      Timestamp: now.toLocaleString('no-NO', { hour12: false }),
       Acknowledged: false,
     });
   }
