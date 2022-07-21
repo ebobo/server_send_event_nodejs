@@ -60,9 +60,9 @@ app.get('/events', (req, res) => res.send(events));
 app.get('/events/length', (req, res) => {
   res.send({
     total: events.length,
-    alarm: events.filter((e) => e.type === 'Alarm').length,
-    fault: events.filter((e) => e.type === 'Fault').length,
-    unknow: events.filter((e) => e.type === 'Unknow').length,
+    alarm: events.filter((e) => e.Type === 'Alarm').length,
+    fault: events.filter((e) => e.Type === 'Fault').length,
+    unknow: events.filter((e) => e.Type === 'Unknow').length,
   });
 });
 
@@ -95,7 +95,7 @@ app.post('/events', (req, res) => {
   });
 
   res.send({
-    type: events.filter((e) => e.type === type).length.toString(),
+    type: events.filter((e) => e.Type === type).length,
     total: events.length,
   });
 });

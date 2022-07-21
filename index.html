@@ -96,7 +96,6 @@
           const response = await fetch('/events', requestOptions);
           const result = await response.text();
           setEventsNumber(0, 0, 0, 0);
-          console.log(result);
         } catch (err) {
           console.log(err);
         }
