@@ -17,6 +17,7 @@ module.exports.generateEvents = (num) => {
       Type,
       System,
       Timestamp: now.toLocaleString('no-NO', { hour12: false }),
+      Timesvalue: now.valueOf(),
       Acknowledged: false,
     });
   }
@@ -33,6 +34,7 @@ module.exports.generateEventsByType = (num, type, system) => {
       Type: type,
       System: system,
       Timestamp: now.toLocaleString('no-NO', { hour12: false }),
+      Timesvalue: now.valueOf(),
       Acknowledged: false,
     });
   }
