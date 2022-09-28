@@ -13,6 +13,9 @@
       <div id="Total" class="channel">
         <div class="name">Total:</div>
         <div class="events">0</div>
+        <button class="start" onclick="simStart()">Sim Start</button>
+        <button class="stop" disabled onclick="simStop()">Sim Stop</button>
+
         <button class="delete" onclick="clearAll()">Clear All</button>
       </div>
       <div id="System" class="system">
@@ -87,6 +90,53 @@
         xhr.send(data);
       }
 
+      // start sim event continuously
+      function simStart() {
+        const system = systemType();
+        if (!system) return;
+
+        document.querySelector(`#Total .start`).disabled = true;
+        document.querySelector(`#Total .stop`).disabled = false;
+
+        const data = JSON.stringify({
+          type: 'Alarm',
+          system: 'AutroSafe',
+          interval: 3,
+          stop: false,
+        });
+
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.open('POST', '/events/sim');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(data);
+      }
+
+      // start sim event continuously
+      function simStop() {
+        const system = systemType();
+        if (!system) return;
+
+        document.querySelector(`#Total .start`).disabled = false;
+        document.querySelector(`#Total .stop`).disabled = true;
+
+        const data = JSON.stringify({
+          type: 'Alarm',
+          system: 'AutroSafe',
+          interval: 3,
+          stop: true,
+        });
+
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.open('POST', '/events/sim');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(data);
+      }
+
+      // clean all
       async function clearAll() {
         const requestOptions = {
           method: 'DELETE',

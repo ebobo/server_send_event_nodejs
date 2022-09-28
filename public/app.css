@@ -83,9 +83,24 @@ button.delete {
   background-color: rgb(52, 168, 235);
 }
 
+button.start {
+  background-color: greenyellow;
+}
+
+button.stop {
+  color: white;
+  background-color: orangered;
+}
+
 button.getinfo {
   color: white;
   background-color: rgb(3, 89, 139);
+}
+
+button:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 
 h6.title {
