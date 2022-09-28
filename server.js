@@ -19,7 +19,6 @@ app.use(cors());
 
 // ##############################
 app.use(express.static(__dirname + '/public'));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -28,13 +27,16 @@ let clients = [];
 // unit id
 let base_id = 0;
 // events alarm and faults. caluculate the time
-const startTime = performance.now();
+// const startTime = performance.now();
 let events = tool.generateEvents(3);
-const endTime = performance.now();
-console.log(
-  `GenerateEvents took ${(endTime - startTime).toFixed(2)} milliseconds`
-);
+// const endTime = performance.now();
+// console.log(
+//   `GenerateEvents took ${(endTime - startTime).toFixed(2)} milliseconds`
+// );
 // console.log(events);
+
+// timer
+let eventTimer = null;
 
 // read events from file
 // fs.readFile('initEventsList.json', (err, data) => {
@@ -97,6 +99,39 @@ app.post('/events', (req, res) => {
   res.send({
     type: events.filter((e) => e.Type === type).length,
     total: events.length,
+  });
+});
+
+//add event continuously
+app.post('/events/sim', (req, res) => {
+  const type = req.body.type;
+  const system = req.body.system;
+  const interval = req.body.interval; //ms
+  const stop = req.body.stop;
+
+  if (stop && eventTimer) {
+    clearInterval(eventTimer);
+    eventTimer = null;
+    console.log('clear interval');
+  } else {
+    if (!type || !system || !interval) {
+      return res.status(400).send(`Bad Request Body`);
+    }
+
+    if (!eventTimer) {
+      eventTimer = setInterval(() => {
+        generatedEvents = tool.generateEventsByType(1, type, system);
+        events = events.concat(generatedEvents);
+        console.log(events.length);
+        clients.forEach((client) => {
+          client.response.write(`data: ${JSON.stringify(generatedEvents)}\n\n`);
+        });
+      }, interval);
+    }
+  }
+  res.send({
+    stop,
+    interval,
   });
 });
 
