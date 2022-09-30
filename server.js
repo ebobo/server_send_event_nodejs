@@ -7,7 +7,7 @@ sse.onmessage = console.log
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const tool = require('./eventTool');
+const tool = require('./messageTool');
 const { performance } = require('perf_hooks');
 //file-system
 const fs = require('fs');
@@ -28,7 +28,7 @@ let clients = [];
 let base_id = 0;
 // events alarm and faults. caluculate the time
 // const startTime = performance.now();
-let events = tool.generateEvents(3);
+let events = tool.generateAlarmFaultMessages(3);
 // const endTime = performance.now();
 // console.log(
 //   `GenerateEvents took ${(endTime - startTime).toFixed(2)} milliseconds`
@@ -93,6 +93,7 @@ app.post('/events', (req, res) => {
   events = events.concat(generatedEvents);
 
   clients.forEach((client) => {
+    client.response.write('event: frakon\n');
     client.response.write(`data: ${JSON.stringify(generatedEvents)}\n\n`);
   });
 
@@ -124,6 +125,7 @@ app.post('/events/sim', (req, res) => {
         events = events.concat(generatedEvents);
         console.log(events.length);
         clients.forEach((client) => {
+          client.response.write('event: frakon\n');
           client.response.write(`data: ${JSON.stringify(generatedEvents)}\n\n`);
         });
       }, interval);
@@ -155,6 +157,7 @@ app.post('/event', (req, res) => {
   }
 
   clients.forEach((client) => {
+    client.response.write('event: frakon\n');
     client.response.write(`data: ${JSON.stringify(req.body)}\n\n`);
   });
 });
@@ -196,7 +199,7 @@ app.get('/clients', (req, res) => {
 });
 
 // sse path
-app.get('/stream', (req, res) => {
+app.get('/sse/feed', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Connection', 'keep-alive');
   res.setHeader('Cache-Control', 'no-cache');
@@ -220,8 +223,10 @@ app.get('/stream', (req, res) => {
     clients = clients.filter((client) => client.id !== clientId);
   });
 
+  const title = 'event: frakon\n';
   const data = `data: ${JSON.stringify(events)}\n\n`;
 
+  res.write(title);
   res.write(data);
 
   // test function for send sse message
