@@ -42,6 +42,43 @@ module.exports.generateAlarmFaultMessages = (num) => {
   return messages;
 };
 
+var randomSentence = require('random-sentence');
+
+//The maximum is exclusive and the minimum is inclusive
+module.exports.generateMessagesByType = (num, type) => {
+  let messages = [];
+
+  for (let i = 0; i < num; i++) {
+    const now = new Date();
+
+    // module
+    const mod = randomSentence({ words: 1 });
+    // tag
+    const tag = randomSentence({ words: 1 });
+
+    // message object
+    const message = {
+      description: makeDescription(5),
+      key: makeKey(type, mod, tag),
+      module: mod,
+      name: randomSentence({ words: 2 }),
+      tag: tag,
+      time: now.valueOf(),
+      value: makeValue(),
+    };
+
+    const meta = {
+      codec: 'alarmMsg',
+      deleted: false,
+      quality: 'normal',
+      type,
+    };
+
+    messages.push({ message, meta });
+  }
+  return messages;
+};
+
 const makeDescription = (length) => {
   const obj = { text: randomSentence({ words: length }) };
   return [obj];

@@ -89,12 +89,14 @@ app.post('/events', (req, res) => {
     return res.status(400).send(`Bad Request Body`);
   }
 
-  generatedEvents = tool.generateEventsByType(size, type, system);
+  generatedEvents = tool.generateMessagesByType(size, type);
   events = events.concat(generatedEvents);
 
   clients.forEach((client) => {
-    client.response.write('event: frakon\n');
-    client.response.write(`data: ${JSON.stringify(generatedEvents)}\n\n`);
+    generatedEvents.forEach((event) => {
+      client.response.write('event: frakon\n');
+      client.response.write(`data: ${JSON.stringify(event)}\n\n`);
+    });
   });
 
   res.send({
