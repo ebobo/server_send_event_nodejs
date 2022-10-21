@@ -101,7 +101,7 @@
         const data = JSON.stringify({
           type: 'Alarm',
           system: 'AutroSafe',
-          interval: 3,
+          interval: 5,
           stop: false,
         });
 
@@ -122,9 +122,7 @@
         document.querySelector(`#Total .stop`).disabled = true;
 
         const data = JSON.stringify({
-          type: 'Alarm',
-          system: 'AutroSafe',
-          interval: 3,
+          interval: 5,
           stop: true,
         });
 

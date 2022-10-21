@@ -45,7 +45,7 @@ let eventTimer = null;
 // });
 
 //port
-const port = process.env.PORT || 5005;
+const port = process.env.PORT || 5000;
 // server name
 const serverName = process.env.SERVER_NAME || 'SSE server 5005';
 
@@ -105,28 +105,25 @@ app.post('/events', (req, res) => {
 
 //add event continuously
 app.post('/events/sim', (req, res) => {
-  const type = req.body.type;
-  const system = req.body.system;
   const interval = req.body.interval; //ms
   const stop = req.body.stop;
 
   if (stop && eventTimer) {
     clearInterval(eventTimer);
     eventTimer = null;
-    console.log('clear interval');
   } else {
-    if (!type || !system || !interval) {
+    if (!interval) {
       return res.status(400).send(`Bad Request Body`);
     }
 
     if (!eventTimer) {
       eventTimer = setInterval(() => {
-        generatedEvents = tool.generateEventsByType(1, type, system);
-        events = events.concat(generatedEvents);
+        const generatedEvent = tool.generateAlarmFaultMessages(1)[0];
+        events.push(generatedEvent);
         console.log(events.length);
         clients.forEach((client) => {
           client.response.write('event: frakon\n');
-          client.response.write(`data: ${JSON.stringify(generatedEvents)}\n\n`);
+          client.response.write(`data: ${JSON.stringify(generatedEvent)}\n\n`);
         });
       }, interval);
     }
@@ -224,10 +221,10 @@ app.get('/sse/feed', (req, res) => {
   });
 
   const title = 'event: frakon\n';
-  const data = `data: ${JSON.stringify(events)}\n\n`;
-
-  res.write(title);
-  res.write(data);
+  events.forEach((event) => {
+    res.write(title);
+    res.write(`data: ${JSON.stringify(event)}\n\n`);
+  });
 
   // test function for send sse message
   // let i = 0;
