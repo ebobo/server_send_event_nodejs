@@ -8,6 +8,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const tool = require('./messageTool');
+const objectTool = require('./objectTool');
 const { performance } = require('perf_hooks');
 //file-system
 const fs = require('fs');
@@ -34,6 +35,9 @@ let events = tool.generateAlarmFaultMessages(3);
 //   `GenerateEvents took ${(endTime - startTime).toFixed(2)} milliseconds`
 // );
 // console.log(events);
+
+// object list
+const objects = objectTool.generateObjectMessage(100);
 
 // timer
 let eventTimer = null;
@@ -100,7 +104,7 @@ app.post('/events', (req, res) => {
   });
 
   res.send({
-    type: events.filter((e) => e.Type === type).length,
+    type: events.filter((e) => e.meta.type === type).length,
     total: events.length,
   });
 });
@@ -196,6 +200,9 @@ app.get('/clients', (req, res) => {
     res.send('no clients connected');
   }
 });
+
+//get object lise
+app.get('/object/list', (req, res) => res.send(objects));
 
 // sse path
 app.get('/sse/feed', (req, res) => {
