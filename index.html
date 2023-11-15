@@ -8,7 +8,7 @@
     <title>SSE server</title>
   </head>
   <body>
-    <h6 class="title">SSE server at port 5000</h6>
+    <h6 class="title">SSE server at port 5005</h6>
     <div class="container">
       <div id="Total" class="channel">
         <div class="name">Total:</div>
@@ -61,6 +61,8 @@
     </div>
 
     <script>
+      //timer for getEventNumber
+      let intervalID = null;
       //add alarm
       getEventsNumber();
 
@@ -92,6 +94,9 @@
 
       // start sim event continuously
       function simStart() {
+        if (intervalID === null) {
+          intervalID = setInterval(getEventsNumber, 500);
+        }
         const system = systemType();
         if (!system) return;
 
@@ -115,6 +120,11 @@
 
       // start sim event continuously
       function simStop() {
+        if (intervalID) {
+          clearInterval(intervalID);
+          intervalID = null;
+        }
+
         const system = systemType();
         if (!system) return;
 
@@ -136,6 +146,10 @@
 
       // clean all
       async function clearAll() {
+        if (intervalID) {
+          clearInterval(intervalID);
+          intervalID = null;
+        }
         const requestOptions = {
           method: 'DELETE',
           redirect: 'follow',
@@ -173,9 +187,9 @@
 
       function setEventsNumber(total, alarm, fault, unknow) {
         document.querySelector(`#Total .events`).innerHTML = total;
-        document.querySelector(`#Alarms .events`).innerHTML = alarm;
-        document.querySelector(`#Faults .events`).innerHTML = fault;
-        document.querySelector(`#Unknows .events`).innerHTML = unknow;
+        document.querySelector(`#alarms .events`).innerHTML = alarm;
+        document.querySelector(`#faults .events`).innerHTML = fault;
+        document.querySelector(`#unknows .events`).innerHTML = unknow;
       }
 
       function systemType() {

@@ -49,7 +49,7 @@ let eventTimer = null;
 // });
 
 //port
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5005;
 // server name
 const serverName = process.env.SERVER_NAME || 'SSE server 5005';
 
@@ -66,9 +66,9 @@ app.get('/events', (req, res) => res.send(events));
 app.get('/events/length', (req, res) => {
   res.send({
     total: events.length,
-    alarm: events.filter((e) => e.Type === 'Alarm').length,
-    fault: events.filter((e) => e.Type === 'Fault').length,
-    unknow: events.filter((e) => e.Type === 'Unknow').length,
+    alarm: events.filter((e) => e.meta.type === 'alarm').length,
+    fault: events.filter((e) => e.meta.type === 'fault').length,
+    unknow: events.filter((e) => e.meta.type === 'unknow').length,
   });
 });
 
@@ -222,10 +222,10 @@ app.get('/sse/feed', (req, res) => {
   };
 
   clients.push(newClient);
-  console.log(`current connected clients ${clients.length}`);
+  // console.log(`current connected clients ： ${clients.length}`);
 
   req.on('close', () => {
-    console.log(`Client ${clientId} Connection closed`);
+    console.log(`Client ${req.headers.origin} Connection closed`);
     clients = clients.filter((client) => client.id !== clientId);
   });
 
