@@ -66,13 +66,18 @@ button {
 
 button.alarm {
   color: white;
-  background-color: rgb(212, 48, 48);
+  background-color: #df1b1b;
   border-color: pink;
+}
+button.prealarm {
+  color: white;
+  background-color: #f69400;
+  border-color: rgb(91, 80, 82);
 }
 
 button.fault {
   color: white;
-  background-color: rgb(255, 187, 0);
+  background-color: #fad900;
 }
 
 button.unknow {

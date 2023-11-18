@@ -29,7 +29,7 @@ let clients = [];
 let base_id = 0;
 // events alarm and faults. caluculate the time
 // const startTime = performance.now();
-let events = tool.generateAlarmFaultMessages(3);
+let events = tool.generateAlarmFaultMessages(5);
 // const endTime = performance.now();
 // console.log(
 //   `GenerateEvents took ${(endTime - startTime).toFixed(2)} milliseconds`
@@ -67,6 +67,7 @@ app.get('/events/length', (req, res) => {
   res.send({
     total: events.length,
     alarm: events.filter((e) => e.meta.type === 'alarm').length,
+    prealarm: events.filter((e) => e.meta.type === 'prealarm').length,
     fault: events.filter((e) => e.meta.type === 'fault').length,
     unknow: events.filter((e) => e.meta.type === 'unknow').length,
   });

@@ -35,23 +35,32 @@
         <div class="events">0</div>
         <button class="alarm" onclick="addEvents(1, 'alarm')">+ 1</button>
         <button class="alarm" onclick="addEvents(100, 'alarm')">+ 100</button>
-        <button class="alarm" onclick="addEvents(1000, 'alarm')">+ 1000</button>
+        <button class="alarm" onclick="addEvents(500, 'alarm')">+ 500</button>
+      </div>
+      <div id="prealarms" class="channel">
+        <div class="name">Prealarm:</div>
+        <div class="events">0</div>
+        <button class="prealarm" onclick="addEvents(1, 'prealarm')">+ 1</button>
+        <button class="prealarm" onclick="addEvents(100, 'prealarm')">
+          + 100
+        </button>
+        <button class="prealarm" onclick="addEvents(500, 'prealarm')">
+          + 500
+        </button>
       </div>
       <div id="faults" class="channel">
         <div class="name">Fault:</div>
         <div class="events">0</div>
         <button class="fault" onclick="addEvents(1, 'fault')">+ 1</button>
         <button class="fault" onclick="addEvents(100, 'fault')">+ 100</button>
-        <button class="fault" onclick="addEvents(1000, 'fault')">+ 1000</button>
+        <button class="fault" onclick="addEvents(500, 'fault')">+ 500</button>
       </div>
       <div id="unknows" class="channel">
         <div class="name">Unknown:</div>
         <div class="events">0</div>
         <button class="unknow" onclick="addEvents(1, 'unknow')">+ 1</button>
         <button class="unknow" onclick="addEvents(100, 'unknow')">+ 100</button>
-        <button class="unknow" onclick="addEvents(1000, 'unknow')">
-          + 1000
-        </button>
+        <button class="unknow" onclick="addEvents(500, 'unknow')">+ 500</button>
       </div>
       <div id="Clients" class="info">
         <div class="t2">Connected Clients:</div>
@@ -157,7 +166,7 @@
         try {
           const response = await fetch('/events', requestOptions);
           const result = await response.text();
-          setEventsNumber(0, 0, 0, 0);
+          setEventsNumber(0, 0, 0, 0, 0);
         } catch (err) {
           console.log(err);
         }
@@ -166,8 +175,9 @@
       async function getEventsNumber() {
         try {
           const response = await fetch('events/length');
-          const { total, alarm, fault, unknow } = await response.json();
-          setEventsNumber(total, alarm, fault, unknow);
+          const { total, alarm, prealarm, fault, unknow } =
+            await response.json();
+          setEventsNumber(total, alarm, prealarm, fault, unknow);
         } catch (err) {
           console.log(err);
         }
@@ -185,9 +195,10 @@
         }
       }
 
-      function setEventsNumber(total, alarm, fault, unknow) {
+      function setEventsNumber(total, alarm, prealarm, fault, unknow) {
         document.querySelector(`#Total .events`).innerHTML = total;
         document.querySelector(`#alarms .events`).innerHTML = alarm;
+        document.querySelector(`#prealarms .events`).innerHTML = prealarm;
         document.querySelector(`#faults .events`).innerHTML = fault;
         document.querySelector(`#unknows .events`).innerHTML = unknow;
       }

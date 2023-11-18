@@ -5,13 +5,16 @@ module.exports.generateAlarmFaultMessages = (num) => {
   let messages = [];
 
   for (let i = 0; i < num; i++) {
-    const rem = Math.floor(Math.random() * 3);
+    const rem = Math.floor(Math.random() * 4);
     let type = 'alarm';
     if (rem === 1) {
       type = 'fault';
     } else if (rem === 2) {
       type = 'unknow';
+    } else if (rem === 3) {
+      type = 'prealarm';
     }
+
     const now = new Date();
 
     // module
