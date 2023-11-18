@@ -9,9 +9,9 @@ body {
   margin-left: 10%;
   font-size: 2rem;
   font-weight: 300;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Roboto', sans-serif; /* Use Roboto for Material Design */
 }
+
 div#container {
   display: grid;
   grid-template-rows: 1fr;
@@ -98,14 +98,18 @@ button.getinfo {
 }
 
 button:disabled {
-  border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
+}
+button:hover {
+  background-color: darken(currentColor, 10%); /* Darken on hover */
 }
 
 h6.title {
   margin-bottom: 2rem;
-  color: chocolate;
+  color: #d2691e; /* Chocolate color maintained */
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
 }
 
 label.radio {
